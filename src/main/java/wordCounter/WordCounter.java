@@ -33,11 +33,7 @@ public class WordCounter {
     }
 
     private Word buildWordObject(Map<String, Integer> firstWordListFrequency, Map<String, Integer> secondWordListFrequency, String word) {
-        return new Word(word, getWordFrequency(word, firstWordListFrequency), getWordFrequency(word, secondWordListFrequency));
-    }
-
-    private int getWordFrequency(String word, Map<String, Integer> wordFrequency) {
-        return wordFrequency == null || wordFrequency.isEmpty() || !wordFrequency.containsKey(word) ? 0 : wordFrequency.get(word);
+        return new Word(word, firstWordListFrequency.getOrDefault(word, 0), secondWordListFrequency.getOrDefault(word, 0));
     }
 
     private Map<String, Integer> count(List<String> words) {

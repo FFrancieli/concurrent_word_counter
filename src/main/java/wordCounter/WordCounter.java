@@ -22,14 +22,17 @@ public class WordCounter {
     }
 
     public List<Word> countWords() {
-        List<String> mergedWordsList = Stream.concat(firstWordList.stream(), secondWordList.stream()).collect(Collectors.toList());
+        List<String> mergedWordsList = mergeLists(firstWordList, secondWordList);
 
         Map<String, Integer> firstWordListFrequency = count(firstWordList);
         Map<String, Integer> secondWordListFrequency = count(secondWordList);
 
-        return mergedWordsList.stream().distinct()
-                .map(word -> buildWordObject(firstWordListFrequency, secondWordListFrequency, word))
+        return mergedWordsList.stream().map(word -> buildWordObject(firstWordListFrequency, secondWordListFrequency, word))
                 .collect(Collectors.toList());
+    }
+
+    private List<String> mergeLists(List<String> firsList, List<String> secondList) {
+        return Stream.concat(firsList.stream(), secondList.stream()).distinct().collect(Collectors.toList());
     }
 
     private Word buildWordObject(Map<String, Integer> firstWordListFrequency, Map<String, Integer> secondWordListFrequency, String word) {

@@ -2,7 +2,6 @@ package wordCounter;
 
 import word.Words.Word;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,9 +25,10 @@ public class WordCounter {
         List<String> mergedWordsList = Stream.concat(firstWordList.stream(), secondWordList.stream()).collect(Collectors.toList());
 
         Map<String, Integer> firstWordListFrequency = count(firstWordList);
+        Map<String, Integer> secondWordListFrequency = count(secondWordList);
 
         return mergedWordsList.stream().distinct()
-                .map(word -> buildWordObject(firstWordListFrequency, new HashMap<>(), word))
+                .map(word -> buildWordObject(firstWordListFrequency, secondWordListFrequency, word))
                 .collect(Collectors.toList());
     }
 
@@ -37,7 +37,7 @@ public class WordCounter {
     }
 
     private int getWordFrequency(String word, Map<String, Integer> wordFrequency) {
-        return wordFrequency == null || wordFrequency.isEmpty() ? 0 : wordFrequency.get(word);
+        return wordFrequency == null || wordFrequency.isEmpty() || !wordFrequency.containsKey(word) ? 0 : wordFrequency.get(word);
     }
 
     private Map<String, Integer> count(List<String> words) {

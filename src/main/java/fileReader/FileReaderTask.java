@@ -18,10 +18,10 @@ public class FileReaderTask implements Runnable {
         this.cache = cache;
     }
 
-    public FileReaderTask(File file) {
+    public FileReaderTask(File file, Cache cache) {
         this.file = file;
         this.fileReader = new FileReader();
-        this.cache = new Cache();
+        this.cache = cache;
     }
 
     public void run() {

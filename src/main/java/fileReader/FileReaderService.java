@@ -26,7 +26,7 @@ public class FileReaderService {
     }
 
     private List<Runnable> createTasks(List<File> files) {
-        return files.stream().map(FileReaderTask::new).collect(Collectors.toList());
+        return files.stream().map(task -> new FileReaderTask(task, cache)).collect(Collectors.toList());
     }
 
     public void readFile() {

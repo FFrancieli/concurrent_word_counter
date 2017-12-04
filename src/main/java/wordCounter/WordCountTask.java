@@ -1,4 +1,4 @@
-package tasks;
+package wordCounter;
 
 public class WordCountTask implements Runnable{
     @Override

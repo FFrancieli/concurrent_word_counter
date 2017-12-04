@@ -1,5 +1,6 @@
 package cache;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -21,6 +22,6 @@ public class Cache {
     }
 
     public List<List<String>> asList() {
-        return null;
+        return new ArrayList<>(cache.values());
     }
 }

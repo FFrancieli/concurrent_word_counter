@@ -3,7 +3,6 @@ package fileReader;
 import word.Word;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,14 +13,14 @@ public class FileReaderService {
     private final ExecutorService executor;
     private List<Runnable> tasks;
 
-    public FileReaderService(ExecutorService executor, File firstFile, File secondFile) {
+    public FileReaderService(ExecutorService executor, List<File> files) {
         this.executor = executor;
-        tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile));
+        tasks = files.stream().map(FileReaderTask::new).collect(Collectors.toList());
     }
 
-    public FileReaderService(File firstFile, File secondFile) {
+    public FileReaderService(List<File> files) {
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile));
+        tasks = files.stream().map(FileReaderTask::new).collect(Collectors.toList());
     }
 
     public List<Word> countWordFrequencyFromFiles() {

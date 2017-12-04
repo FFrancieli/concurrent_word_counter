@@ -1,7 +1,7 @@
 package wordCounter;
 
 import org.junit.Test;
-import word.Words.Word;
+import word.Word;
 
 import java.util.Arrays;
 import java.util.Collections;

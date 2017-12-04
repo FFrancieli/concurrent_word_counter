@@ -1,4 +1,4 @@
-package word.Words;
+package word;
 
 public class Word {
     private String word;

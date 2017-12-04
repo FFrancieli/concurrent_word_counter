@@ -1,6 +1,6 @@
 package fileReader;
 
-import word.Words.Word;
+import word.Word;
 
 import java.io.File;
 import java.util.Arrays;

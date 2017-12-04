@@ -18,4 +18,8 @@ public class WordCountTask implements Callable {
     public List<Word> call() throws Exception {
         return null;
     }
+
+    public boolean canBeExecuted() {
+        return firstWordList != null && secondWordList != null;
+    }
 }

@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -42,5 +44,14 @@ public class FileReaderServiceTest {
         wordCounterService.countWordFrequencyFromFiles();
 
         verify(executor).shutdown();
+    }
+
+    @Test
+    public void createsListOfFileReaderTasksOnInitialize() throws Exception {
+        FileReaderService fileReaderService = new FileReaderService(files);
+
+        List<Runnable> tasks = fileReaderService.getTasks();
+
+        assertThat(tasks.size(), is(2));
     }
 }

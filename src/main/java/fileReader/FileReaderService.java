@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class FileReaderService {
 
     private final ExecutorService executor;
-    private List<Runnable> tasks;
+    private  List<Runnable> tasks;
 
     public FileReaderService(ExecutorService executor, List<File> files) {
         this.executor = executor;
@@ -28,5 +28,9 @@ public class FileReaderService {
 
         executor.shutdown();
         return null;
+    }
+
+    public List<Runnable> getTasks() {
+        return tasks;
     }
 }

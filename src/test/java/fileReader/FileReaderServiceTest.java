@@ -1,5 +1,6 @@
 package fileReader;
 
+import cache.Cache;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -48,7 +49,7 @@ public class FileReaderServiceTest {
 
     @Test
     public void createsListOfFileReaderTasksOnInitialize() throws Exception {
-        FileReaderService fileReaderService = new FileReaderService(files);
+        FileReaderService fileReaderService = new FileReaderService(files, mock(Cache.class));
 
         List<Runnable> tasks = fileReaderService.getTasks();
 

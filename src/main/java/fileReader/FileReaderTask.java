@@ -1,7 +1,6 @@
 package fileReader;
 
 import cache.Cache;
-import fileReader.FileReader;
 
 import java.io.File;
 import java.io.IOException;

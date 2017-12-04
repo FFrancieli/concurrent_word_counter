@@ -1,4 +1,4 @@
-package input;
+package fileReader;
 
 import java.io.File;
 import java.io.IOException;

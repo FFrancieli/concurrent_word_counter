@@ -1,8 +1,11 @@
 package wordCounter;
 
-public class WordCountTask implements Runnable{
-    @Override
-    public void run() {
+import java.util.concurrent.Callable;
 
+public class WordCountTask implements Callable {
+    
+    @Override
+    public Object call() throws Exception {
+        return null;
     }
 }

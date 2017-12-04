@@ -24,18 +24,6 @@ public class WordCounterExecutorServiceTest {
     }
 
     @Test
-    public void executesWordCountTask() throws Exception {
-        ExecutorService executor = mock(ExecutorService.class);
-        File firstFile = new File("some/file/path");
-        File secondFile = new File("another/file/path");
-
-        WordCounterExecutorService wordCounterservice = new WordCounterExecutorService(executor, firstFile, secondFile);
-        wordCounterservice.countWordFrequencyFromFiles();
-
-        verify(executor).submit(any(WordCountTask.class));
-    }
-
-    @Test
     public void shutsDownTaskExecutor() throws Exception {
         ExecutorService executor = mock(ExecutorService.class);
         File firstFile = new File("some/file/path");

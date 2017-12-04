@@ -18,7 +18,7 @@ public class WordCounterExecutorService {
 
     public WordCounterExecutorService(ExecutorService executor, File firstFile, File secondFile) {
         this.executor = executor;
-        tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile), new WordCountTask());
+        tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile));
     }
 
     public WordCounterExecutorService(File firstFile, File secondFile) {

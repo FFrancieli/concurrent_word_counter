@@ -27,7 +27,7 @@ public class FileReaderService {
         return files.stream().map(FileReaderTask::new).collect(Collectors.toList());
     }
 
-    public List<Word> countWordFrequencyFromFiles() {
+    public List<Word> readFile() {
         tasks.stream().map(executor::submit).collect(Collectors.toList());
 
         executor.shutdown();

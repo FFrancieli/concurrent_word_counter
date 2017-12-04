@@ -33,7 +33,7 @@ public class FileReaderServiceTest {
     @Test
     public void executesReadFileTask() throws Exception {
         FileReaderService wordCounterService = new FileReaderService(executor, files);
-        wordCounterService.countWordFrequencyFromFiles();
+        wordCounterService.readFile();
 
         verify(executor, times(2)).submit(any(FileReaderTask.class));
     }
@@ -41,7 +41,7 @@ public class FileReaderServiceTest {
     @Test
     public void shutsDownTaskExecutor() throws Exception {
         FileReaderService wordCounterService = new FileReaderService(executor, files);
-        wordCounterService.countWordFrequencyFromFiles();
+        wordCounterService.readFile();
 
         verify(executor).shutdown();
     }

@@ -3,6 +3,7 @@ package wordCounter;
 import cache.Cache;
 import word.Word;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -27,6 +28,10 @@ public class WordCounterService {
     }
 
     public List<Word> countWordsFrequency() throws ExecutionException, InterruptedException {
+        if (!wordCountTask.canBeExecuted()) {
+            return Collections.emptyList();
+        }
+
         Future<List<Word>> wordFrequency = executorService.submit(wordCountTask);
         executorService.shutdown();
 

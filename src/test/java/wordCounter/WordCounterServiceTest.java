@@ -16,9 +16,7 @@ import java.util.concurrent.Future;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class WordCounterServiceTest {
@@ -40,6 +38,7 @@ public class WordCounterServiceTest {
 
         wordCounterService = new WordCounterService(executorService, wordCountTask);
         when(executorService.submit(any(Callable.class))).thenReturn(mock(Future.class));
+        when(wordCountTask.canBeExecuted()).thenReturn(true);
     }
 
     @Test
@@ -80,5 +79,23 @@ public class WordCounterServiceTest {
         List<Word> wordFrequency = wordCounterService.countWordsFrequency();
 
         assertThat(wordFrequency, is(words));
+    }
+
+    @Test
+    public void doesNotExecuteWordCountTaskWhenTaskCannotBeExecuted() throws Exception {
+        when(wordCountTask.canBeExecuted()).thenReturn(false);
+
+        wordCounterService.countWordsFrequency();
+
+        verify(executorService, never()).submit(any(WordCountTask.class));
+    }
+
+    @Test
+    public void returnsEmptyWordListWhenWordCountTaskCannotBeExecuted() throws Exception {
+        when(wordCountTask.canBeExecuted()).thenReturn(false);
+
+        List<Word> wordsFrequency = wordCounterService.countWordsFrequency();
+
+        assertThat(wordsFrequency.isEmpty(), is(true));
     }
 }

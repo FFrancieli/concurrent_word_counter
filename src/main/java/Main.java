@@ -1,5 +1,3 @@
-import wordCounter.FileReaderService;
-
 import java.io.File;
 import java.io.IOException;
 

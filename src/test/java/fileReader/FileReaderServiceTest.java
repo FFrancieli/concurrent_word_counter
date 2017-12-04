@@ -1,5 +1,6 @@
-package wordCounter;
+package fileReader;
 
+import fileReader.FileReaderService;
 import org.junit.Test;
 import tasks.FileReaderTask;
 

@@ -1,7 +1,5 @@
 package fileReader;
 
-import word.Word;
-
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

@@ -20,4 +20,8 @@ public class Word {
     public int getFrequencySecondFile() {
         return frequencySecondFile;
     }
+
+    public int getTotalFrequency() {
+        return totalFrequency;
+    }
 }

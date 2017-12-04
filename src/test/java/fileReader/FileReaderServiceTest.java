@@ -15,8 +15,8 @@ public class FileReaderServiceTest {
         File firstFile = new File("some/file/path");
         File secondFile = new File("another/file/path");
 
-        FileReaderService wordCounterservice = new FileReaderService(executor, firstFile, secondFile);
-        wordCounterservice.countWordFrequencyFromFiles();
+        FileReaderService wordCounterService = new FileReaderService(executor, firstFile, secondFile);
+        wordCounterService.countWordFrequencyFromFiles();
 
         verify(executor, times(2)).submit(any(FileReaderTask.class));
     }
@@ -27,8 +27,8 @@ public class FileReaderServiceTest {
         File firstFile = new File("some/file/path");
         File secondFile = new File("another/file/path");
 
-        FileReaderService wordCounterservice = new FileReaderService(executor, firstFile, secondFile);
-        wordCounterservice.countWordFrequencyFromFiles();
+        FileReaderService wordCounterService = new FileReaderService(executor, firstFile, secondFile);
+        wordCounterService.countWordFrequencyFromFiles();
 
         verify(executor).shutdown();
     }

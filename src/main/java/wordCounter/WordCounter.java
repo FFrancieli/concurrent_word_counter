@@ -13,12 +13,8 @@ public class WordCounter {
     private final List<String> secondWordList;
 
     public WordCounter(List<String> firstWordList, List<String> secondWordList) {
-        this.firstWordList = toLowerCase(firstWordList);
-        this.secondWordList = toLowerCase(secondWordList);
-    }
-
-    private List<String> toLowerCase(List<String> list) {
-        return list.stream().map(String::toLowerCase).collect(Collectors.toList());
+        this.firstWordList = firstWordList;
+        this.secondWordList = secondWordList;
     }
 
     public List<Word> countWords() {

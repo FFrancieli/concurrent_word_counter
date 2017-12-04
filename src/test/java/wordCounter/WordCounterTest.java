@@ -74,22 +74,7 @@ public class WordCounterTest {
         assertThat(hi.getFrequencyFirstFile(), is(1));
         assertThat(hi.getFrequencySecondFile(), is(0));
     }
-
-    @Test
-    public void countsSameWordWithDifferentCases() throws Exception {
-        List<String> firstWordList = Arrays.asList("word", "Word", "WORD");
-        WordCounter wordCounter = new WordCounter(firstWordList, Collections.emptyList());
-
-        List<Word> wordFrequency = wordCounter.countWords();
-
-        assertThat(wordFrequency.size(), is(1));
-
-        Word word = wordFrequency.get(0);
-        assertThat(wordFrequency.size(), is(1));
-        assertThat(word.getFrequencyFirstFile(), is(3));
-        assertThat(word.getFrequencySecondFile(), is(0));
-    }
-
+    
     @Test
     public void countsSingleWordOnSecondWordList() throws Exception {
         List<String> secondWordList = Arrays.asList("word");

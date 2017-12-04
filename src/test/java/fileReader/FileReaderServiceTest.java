@@ -1,8 +1,6 @@
 package fileReader;
 
-import fileReader.FileReaderService;
 import org.junit.Test;
-import tasks.FileReaderTask;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;

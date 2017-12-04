@@ -1,6 +1,5 @@
 package fileReader;
 
-import tasks.FileReaderTask;
 import word.Words.Word;
 
 import java.io.File;

@@ -1,7 +1,8 @@
-package tasks;
+package fileReader;
 
 import cache.Cache;
 import fileReader.FileReader;
+import fileReader.FileReaderTask;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

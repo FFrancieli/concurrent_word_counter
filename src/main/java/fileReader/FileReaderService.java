@@ -15,12 +15,16 @@ public class FileReaderService {
 
     public FileReaderService(ExecutorService executor, List<File> files) {
         this.executor = executor;
-        tasks = files.stream().map(FileReaderTask::new).collect(Collectors.toList());
+        tasks = createTasks(files);
     }
 
     public FileReaderService(List<File> files) {
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        tasks = files.stream().map(FileReaderTask::new).collect(Collectors.toList());
+        tasks = createTasks(files);
+    }
+
+    private List<Runnable> createTasks(List<File> files) {
+        return files.stream().map(FileReaderTask::new).collect(Collectors.toList());
     }
 
     public List<Word> countWordFrequencyFromFiles() {

@@ -1,7 +1,6 @@
 package wordCounter;
 
 import tasks.FileReaderTask;
-import tasks.WordCountTask;
 import word.Words.Word;
 
 import java.io.File;

@@ -24,4 +24,13 @@ public class Word {
     public int getTotalFrequency() {
         return totalFrequency;
     }
+
+    public String getWord() {
+        return word;
+    }
+
+    @Override
+    public String toString() {
+        return word + " " + totalFrequency + " = " + frequencyFirstFile + " + " + frequencySecondFile;
+    }
 }

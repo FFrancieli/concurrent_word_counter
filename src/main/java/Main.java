@@ -1,4 +1,4 @@
-import wordCounter.WordCounterExecutorService;
+import wordCounter.FileReaderServiceService;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ public class Main {
         File firstFile = new File("src/main/resources/first_file.txt");
         File seconFile = new File("src/main/resources/second_file.txt");
 
-        WordCounterExecutorService service = new WordCounterExecutorService(firstFile, seconFile);
+        FileReaderServiceService service = new FileReaderServiceService(firstFile, seconFile);
         service.countWordFrequencyFromFiles();
 
         System.out.println("done!");

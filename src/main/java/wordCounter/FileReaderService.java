@@ -11,17 +11,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class WordCounterExecutorService {
+public class FileReaderService {
 
     private final ExecutorService executor;
     private List<Runnable> tasks;
 
-    public WordCounterExecutorService(ExecutorService executor, File firstFile, File secondFile) {
+    public FileReaderService(ExecutorService executor, File firstFile, File secondFile) {
         this.executor = executor;
         tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile));
     }
 
-    public WordCounterExecutorService(File firstFile, File secondFile) {
+    public FileReaderService(File firstFile, File secondFile) {
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         tasks = Arrays.asList(new FileReaderTask(firstFile), new FileReaderTask(secondFile));
     }

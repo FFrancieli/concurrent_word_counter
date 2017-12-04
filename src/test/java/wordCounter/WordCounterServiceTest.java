@@ -4,11 +4,18 @@ import cache.Cache;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import word.Word;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class WordCounterServiceTest {
@@ -50,5 +57,24 @@ public class WordCounterServiceTest {
         new WordCounterService(cache);
 
         verify(cache).asList();
+    }
+
+    @Test
+    public void returnWordFrequencyList() throws Exception {
+        Word word = new Word("word", 1, 0);
+        List<Word> words = Collections.singletonList(word);
+
+        when(wordCountTask.call()).thenReturn(words);
+
+        Cache cache = new Cache();
+        cache.cache("a", Arrays.asList("a", "b"));
+        cache.cache("g", Arrays.asList("a", "b"));
+
+        WordCounterService wordCounterService = new WordCounterService(cache);
+        wordCounterService.setWordCountTask(wordCountTask);
+
+        List<Word> wordFrequency = wordCounterService.countWordsFrequency();
+
+        assertThat(wordFrequency, is(words));
     }
 }

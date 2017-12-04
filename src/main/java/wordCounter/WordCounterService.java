@@ -4,6 +4,7 @@ import cache.Cache;
 import word.Word;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -25,9 +26,14 @@ public class WordCounterService {
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    public Future<List<Word>> countWordsFrequency() {
-        executorService.submit(wordCountTask);
+    public List<Word> countWordsFrequency() throws ExecutionException, InterruptedException {
+        Future<List<Word>> wordFrequency = executorService.submit(wordCountTask);
         executorService.shutdown();
-        return null;
+
+        return wordFrequency.get();
+    }
+
+    protected void setWordCountTask(WordCountTask wordCountTask) {
+        this.wordCountTask = wordCountTask;
     }
 }

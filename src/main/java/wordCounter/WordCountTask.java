@@ -1,5 +1,7 @@
 package wordCounter;
 
+import word.Word;
+
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -13,7 +15,7 @@ public class WordCountTask implements Callable {
     }
 
     @Override
-    public Object call() throws Exception {
+    public List<Word> call() throws Exception {
         return null;
     }
 

@@ -12,8 +12,8 @@ import java.util.concurrent.ExecutionException;
 public class Main {
         public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         File firstFile = new File("src/main/resources/first_file.txt");
-        File seconFile = new File("src/main/resources/second_file.txt");
-        List<File> files = Arrays.asList(firstFile, seconFile);
+        File secondFile = new File("src/main/resources/second_file.txt");
+        List<File> files = Arrays.asList(firstFile, secondFile);
 
         Cache cache = new Cache();
         FileReaderService fileReaderService = new FileReaderService(files, cache);

@@ -17,7 +17,7 @@ public class FileReader {
         List<String> lines = Files.readAllLines(path);
 
         return lines.stream()
-                .map(line -> line.split("\\s+"))
+                .map(line -> line.toLowerCase().split("\\s+"))
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toList());
     }

@@ -44,6 +44,16 @@ public class FileReaderTest {
         assertThat(words, hasItems("first", "line", "second", "third"));
     }
 
+    @Test
+    public void returnsListOfWordsInLowerCase() throws Exception {
+        File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("one SINGLE Line file conTent"));
+
+        List<String> words = fileReader.read(singleLineFile);
+
+        assertThat(words.size(), is(5));
+        assertThat(words, hasItems("one", "single", "line", "file", "content"));
+    }
+
     private File createInMemoryTemporaryFile(List<String> fileContent) throws IOException {
         File file = File.createTempFile("test", "txt");
         file.deleteOnExit();

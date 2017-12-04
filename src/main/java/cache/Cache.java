@@ -19,4 +19,8 @@ public class Cache {
     public ConcurrentMap<String, List<String>> getCache() {
         return cache;
     }
+
+    public List<List<String>> asList() {
+        return null;
+    }
 }

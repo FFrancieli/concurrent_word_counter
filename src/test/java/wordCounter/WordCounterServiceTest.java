@@ -1,5 +1,6 @@
 package wordCounter;
 
+import cache.Cache;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,13 +16,16 @@ public class WordCounterServiceTest {
     @Mock
     ExecutorService executorService;
 
+    @Mock
+    Cache cache;
+
     WordCounterService wordCounterService;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
 
-        wordCounterService = new WordCounterService(executorService);
+        wordCounterService = new WordCounterService(executorService, cache);
     }
 
     @Test
@@ -36,5 +40,12 @@ public class WordCounterServiceTest {
         wordCounterService.countWordsFrequency();
 
         verify(executorService).shutdown();
+    }
+
+    @Test
+    public void getsCacheContentAsList() throws Exception {
+        wordCounterService.countWordsFrequency();
+
+        verify(cache).asList();
     }
 }

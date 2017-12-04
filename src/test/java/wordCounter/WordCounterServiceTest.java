@@ -9,11 +9,14 @@ import word.Word;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -35,7 +38,8 @@ public class WordCounterServiceTest {
     public void setUp() throws Exception {
         initMocks(this);
 
-        wordCounterService = new WordCounterService(executorService , wordCountTask);
+        wordCounterService = new WordCounterService(executorService, wordCountTask);
+        when(executorService.submit(any(Callable.class))).thenReturn(mock(Future.class));
     }
 
     @Test

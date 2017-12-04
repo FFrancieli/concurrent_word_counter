@@ -21,7 +21,7 @@ public class WordCounterService {
 
     public WordCounterService(Cache cache) {
         List<List<String>> cacheContent = cache.asList();
-        wordCountTask = new WordCountTask(cacheContent.get(0), cacheContent.get(1));
+        wordCountTask = cacheContent.size() < 2 ? new WordCountTask() : new WordCountTask(cacheContent.get(0), cacheContent.get(1));
 
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }

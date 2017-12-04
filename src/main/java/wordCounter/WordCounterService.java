@@ -38,7 +38,7 @@ public class WordCounterService {
         return wordFrequency.get();
     }
 
-    protected void setWordCountTask(WordCountTask wordCountTask) {
+     void setWordCountTask(WordCountTask wordCountTask) {
         this.wordCountTask = wordCountTask;
     }
 }

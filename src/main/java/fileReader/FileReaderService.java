@@ -27,11 +27,10 @@ public class FileReaderService {
         return files.stream().map(FileReaderTask::new).collect(Collectors.toList());
     }
 
-    public List<Word> readFile() {
+    public void readFile() {
         tasks.stream().map(executor::submit).collect(Collectors.toList());
 
         executor.shutdown();
-        return null;
     }
 
     public List<Runnable> getTasks() {

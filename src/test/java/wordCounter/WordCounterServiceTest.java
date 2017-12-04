@@ -19,13 +19,16 @@ public class WordCounterServiceTest {
     @Mock
     Cache cache;
 
+    @Mock
+    WordCountTask wordCountTask;
+
     WordCounterService wordCounterService;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
 
-        wordCounterService = new WordCounterService(executorService, cache);
+        wordCounterService = new WordCounterService(executorService , wordCountTask);
     }
 
     @Test
@@ -43,8 +46,8 @@ public class WordCounterServiceTest {
     }
 
     @Test
-    public void getsCacheContentAsList() throws Exception {
-        wordCounterService.countWordsFrequency();
+    public void getsCacheContentAsListOnInitialize() throws Exception {
+        new WordCounterService(cache);
 
         verify(cache).asList();
     }

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -52,6 +53,46 @@ public class FileReaderTest {
 
         assertThat(words.size(), is(5));
         assertThat(words, hasItems("one", "single", "line", "file", "content"));
+    }
+
+    @Test
+    public void ignoresPunctuation() throws Exception {
+        File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hello, World.:!?-/\\"));
+
+        List<String> words = fileReader.read(singleLineFile);
+
+        assertThat(words, hasItems("hello", "world"));
+        assertThat(words.size(), is(2));
+    }
+
+    @Test
+    public void blankSpacesAreNotWords() throws Exception {
+        File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hello             ,              World!"));
+
+        List<String> words = fileReader.read(singleLineFile);
+
+        assertThat(words, hasItems("hello", "world"));
+        assertThat(words.size(), is(2));
+    }
+
+    @Test
+    public void apostrophesArePartOfTheWord() throws Exception {
+        File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("I don't."));
+
+        List<String> words = fileReader.read(singleLineFile);
+
+        assertThat(words.size(), is(2));
+        assertThat(words, hasItems("i", "don't"));
+    }
+
+    @Test
+    public void specialCharactersAreNotWords() throws Exception {
+        File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hey #$%&)(&*^+-=`~[@]%"));
+
+        List<String> words = fileReader.read(singleLineFile);
+
+        assertThat(words.size(), is(1));
+        assertThat(words, hasItem("hey"));
     }
 
     private File createInMemoryTemporaryFile(List<String> fileContent) throws IOException {

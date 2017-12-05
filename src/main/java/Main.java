@@ -1,7 +1,7 @@
 import cache.Cache;
 import fileReader.FileReaderService;
 import word.Word;
-import wordCounter.WordCounterService;
+import wordCounter.WordCounterServiceExecutor;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class Main {
         FileReaderService fileReaderService = new FileReaderService(files, cache);
         fileReaderService.readFile();
 
-        WordCounterService wordCounterService = new WordCounterService(cache);
-        List<Word> wordFrequency = wordCounterService.countWordsFrequency();
+        WordCounterServiceExecutor wordCounterServiceExecutor = new WordCounterServiceExecutor(cache);
+        List<Word> wordFrequency = wordCounterServiceExecutor.countWordsFrequency();
 
         wordFrequency.forEach(System.out::println);
     }

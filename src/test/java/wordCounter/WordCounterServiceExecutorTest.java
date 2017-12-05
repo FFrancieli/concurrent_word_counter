@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class WordCounterServiceTest {
+public class WordCounterServiceExecutorTest {
 
     @Mock
     ExecutorService executorService;
@@ -29,13 +29,13 @@ public class WordCounterServiceTest {
     @Mock
     WordCountTask wordCountTask;
 
-    WordCounterService wordCounterService;
+    WordCounterServiceExecutor wordCounterServiceExecutor;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
 
-        wordCounterService = new WordCounterService(executorService, wordCountTask);
+        wordCounterServiceExecutor = new WordCounterServiceExecutor(executorService, wordCountTask);
         when(wordCountTask.canBeExecuted()).thenReturn(true);
 
         Word word = new Word("word", 1, 0);
@@ -50,21 +50,21 @@ public class WordCounterServiceTest {
 
     @Test
     public void executesWordCountTask() throws Exception {
-        wordCounterService.countWordsFrequency();
+        wordCounterServiceExecutor.countWordsFrequency();
 
         verify(executorService).submit(wordCountTask);
     }
 
     @Test
     public void shutsDownExecutorService() throws Exception {
-        wordCounterService.countWordsFrequency();
+        wordCounterServiceExecutor.countWordsFrequency();
 
         verify(executorService).shutdown();
     }
 
     @Test
     public void getsCacheContentAsListOnInitialize() throws Exception {
-        new WordCounterService(cache);
+        new WordCounterServiceExecutor(cache);
 
         verify(cache).asList();
     }
@@ -80,10 +80,10 @@ public class WordCounterServiceTest {
         cache.cache("a", Arrays.asList("a", "b"));
         cache.cache("g", Arrays.asList("a", "b"));
 
-        WordCounterService wordCounterService = new WordCounterService(cache);
-        wordCounterService.setWordCountTask(wordCountTask);
+        WordCounterServiceExecutor wordCounterServiceExecutor = new WordCounterServiceExecutor(cache);
+        wordCounterServiceExecutor.setWordCountTask(wordCountTask);
 
-        List<Word> wordFrequency = wordCounterService.countWordsFrequency();
+        List<Word> wordFrequency = wordCounterServiceExecutor.countWordsFrequency();
 
         assertThat(wordFrequency, is(words));
     }
@@ -92,7 +92,7 @@ public class WordCounterServiceTest {
     public void doesNotExecuteWordCountTaskWhenTaskCannotBeExecuted() throws Exception {
         when(wordCountTask.canBeExecuted()).thenReturn(false);
 
-        wordCounterService.countWordsFrequency();
+        wordCounterServiceExecutor.countWordsFrequency();
 
         verify(executorService, never()).submit(any(WordCountTask.class));
     }
@@ -101,7 +101,7 @@ public class WordCounterServiceTest {
     public void returnsEmptyWordListWhenWordCountTaskCannotBeExecuted() throws Exception {
         when(wordCountTask.canBeExecuted()).thenReturn(false);
 
-        List<Word> wordsFrequency = wordCounterService.countWordsFrequency();
+        List<Word> wordsFrequency = wordCounterServiceExecutor.countWordsFrequency();
 
         assertThat(wordsFrequency.isEmpty(), is(true));
     }
@@ -114,10 +114,10 @@ public class WordCounterServiceTest {
 
         when(wordCountTask.call()).thenReturn(words);
 
-        WordCounterService wordCounterService = new WordCounterService(cache);
-        wordCounterService.setWordCountTask(wordCountTask);
+        WordCounterServiceExecutor wordCounterServiceExecutor = new WordCounterServiceExecutor(cache);
+        wordCounterServiceExecutor.setWordCountTask(wordCountTask);
 
-        List<Word> wordFrequency = wordCounterService.countWordsFrequency();
+        List<Word> wordFrequency = wordCounterServiceExecutor.countWordsFrequency();
 
         assertThat(wordFrequency.get(0).getWord(), is(word.getWord()));
         assertThat(wordFrequency.get(1).getWord(), is(anotherWord.getWord()));

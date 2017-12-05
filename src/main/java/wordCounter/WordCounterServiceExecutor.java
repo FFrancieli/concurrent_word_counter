@@ -11,17 +11,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class WordCounterService {
+public class WordCounterServiceExecutor {
 
     private final ExecutorService executorService;
     private WordCountTask wordCountTask;
 
-    public WordCounterService(ExecutorService executorService, WordCountTask wordCountTask) {
+    public WordCounterServiceExecutor(ExecutorService executorService, WordCountTask wordCountTask) {
         this.executorService = executorService;
         this.wordCountTask = wordCountTask;
     }
 
-    public WordCounterService(Cache cache) {
+    public WordCounterServiceExecutor(Cache cache) {
         List<List<String>> cacheContent = cache.asList();
         wordCountTask = cacheContent.size() < 2 ? new WordCountTask() : new WordCountTask(cacheContent.get(0), cacheContent.get(1));
 

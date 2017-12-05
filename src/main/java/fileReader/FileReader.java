@@ -16,7 +16,11 @@ public class FileReader {
 
         List<String> lines = Files.readAllLines(path);
 
-        return lines.stream()
+        return extractWords(lines);
+    }
+
+    private List<String> extractWords(List<String> fileContent) {
+        return fileContent.stream()
                 .map(line -> line.toLowerCase().split("[^\\w']"))
                 .flatMap(Arrays::stream)
                 .filter(word -> !word.isEmpty())

@@ -19,13 +19,9 @@ public class Main {
         FileReaderService fileReaderService = new FileReaderService(files, cache);
         fileReaderService.readFile();
 
-        Thread.sleep(100);
-
         WordCounterService wordCounterService = new WordCounterService(cache);
         List<Word> wordFrequency = wordCounterService.countWordsFrequency();
 
         wordFrequency.forEach(System.out::println);
-
-        System.out.println(cache.getCache().size());
     }
 }

@@ -9,18 +9,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class FileReaderService {
+public class FileReaderServiceExecutor {
 
     private final ExecutorService executor;
     private List<Runnable> tasks;
     private Cache cache;
 
-    public FileReaderService(ExecutorService executor, List<File> files) {
+    public FileReaderServiceExecutor(ExecutorService executor, List<File> files) {
         this.executor = executor;
         tasks = createTasks(files);
     }
 
-    public FileReaderService(List<File> files, Cache cache) {
+    public FileReaderServiceExecutor(List<File> files, Cache cache) {
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.cache = cache;
         this.tasks = createTasks(files);

@@ -1,5 +1,5 @@
 import cache.Cache;
-import fileReader.FileReaderService;
+import fileReader.FileReaderServiceExecutor;
 import word.Word;
 import wordCounter.WordCounterServiceExecutor;
 
@@ -16,8 +16,8 @@ public class Main {
         List<File> files = Arrays.asList(firstFile, secondFile);
 
         Cache cache = new Cache();
-        FileReaderService fileReaderService = new FileReaderService(files, cache);
-        fileReaderService.readFile();
+        FileReaderServiceExecutor fileReaderServiceExecutor = new FileReaderServiceExecutor(files, cache);
+        fileReaderServiceExecutor.readFile();
 
         WordCounterServiceExecutor wordCounterServiceExecutor = new WordCounterServiceExecutor(cache);
         List<Word> wordFrequency = wordCounterServiceExecutor.countWordsFrequency();

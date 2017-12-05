@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class FileReaderServiceTest {
+public class FileReaderServiceExecutorTest {
 
     @Mock
     ExecutorService executor;
@@ -34,7 +34,7 @@ public class FileReaderServiceTest {
 
     @Test
     public void executesReadFileTask() throws Exception {
-        FileReaderService wordCounterService = new FileReaderService(executor, files);
+        FileReaderServiceExecutor wordCounterService = new FileReaderServiceExecutor(executor, files);
         wordCounterService.readFile();
 
         verify(executor, times(2)).submit(any(FileReaderTask.class));
@@ -42,7 +42,7 @@ public class FileReaderServiceTest {
 
     @Test
     public void shutsDownTaskExecutor() throws Exception {
-        FileReaderService wordCounterService = new FileReaderService(executor, files);
+        FileReaderServiceExecutor wordCounterService = new FileReaderServiceExecutor(executor, files);
         wordCounterService.readFile();
 
         verify(executor).shutdown();
@@ -50,18 +50,18 @@ public class FileReaderServiceTest {
 
     @Test
     public void createsListOfFileReaderTasksOnInitialize() throws Exception {
-        FileReaderService fileReaderService = new FileReaderService(files, mock(Cache.class));
+        FileReaderServiceExecutor fileReaderServiceExecutor = new FileReaderServiceExecutor(files, mock(Cache.class));
 
-        List<Runnable> tasks = fileReaderService.getTasks();
+        List<Runnable> tasks = fileReaderServiceExecutor.getTasks();
 
         assertThat(tasks.size(), is(2));
     }
 
     @Test
     public void waitsForThreadsExecutionToFinish() throws Exception {
-        FileReaderService fileReaderService = new FileReaderService(executor, files);
+        FileReaderServiceExecutor fileReaderServiceExecutor = new FileReaderServiceExecutor(executor, files);
 
-        fileReaderService.readFile();
+        fileReaderServiceExecutor.readFile();
 
         verify(executor).awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
     }

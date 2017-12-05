@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -54,5 +55,14 @@ public class FileReaderServiceTest {
         List<Runnable> tasks = fileReaderService.getTasks();
 
         assertThat(tasks.size(), is(2));
+    }
+
+    @Test
+    public void waitsForThreadsExecutionToFinish() throws Exception {
+        FileReaderService fileReaderService = new FileReaderService(executor, files);
+
+        fileReaderService.readFile();
+
+        verify(executor).awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
     }
 }

@@ -9,7 +9,6 @@ import word.Word;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -37,15 +36,23 @@ public class WordCounterServiceTest {
         initMocks(this);
 
         wordCounterService = new WordCounterService(executorService, wordCountTask);
-        when(executorService.submit(any(Callable.class))).thenReturn(mock(Future.class));
         when(wordCountTask.canBeExecuted()).thenReturn(true);
+
+        Word word = new Word("word", 1, 0);
+        List<Word> words = Collections.singletonList(word);
+
+        Future future = mock(Future.class);
+        when(future.get()).thenReturn(words);
+
+        when(executorService.submit(any(WordCountTask.class))).thenReturn(future);
+
     }
 
     @Test
     public void executesWordCountTask() throws Exception {
         wordCounterService.countWordsFrequency();
 
-        verify(executorService).submit(any(WordCountTask.class));
+        verify(executorService).submit(wordCountTask);
     }
 
     @Test
@@ -97,5 +104,22 @@ public class WordCounterServiceTest {
         List<Word> wordsFrequency = wordCounterService.countWordsFrequency();
 
         assertThat(wordsFrequency.isEmpty(), is(true));
+    }
+
+    @Test
+    public void sortsWordList() throws Exception {
+        Word word = new Word("word", 1, 2);
+        Word anotherWord = new Word("hello", 1, 1);
+        List<Word> words = Arrays.asList(anotherWord, word);
+
+        when(wordCountTask.call()).thenReturn(words);
+
+        WordCounterService wordCounterService = new WordCounterService(cache);
+        wordCounterService.setWordCountTask(wordCountTask);
+
+        List<Word> wordFrequency = wordCounterService.countWordsFrequency();
+
+        assertThat(wordFrequency.get(0).getWord(), is(word.getWord()));
+        assertThat(wordFrequency.get(1).getWord(), is(anotherWord.getWord()));
     }
 }

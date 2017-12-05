@@ -1,6 +1,6 @@
 package word;
 
-public class Word {
+public class Word implements Comparable<Word> {
     private String word;
     private int frequencyFirstFile;
     private int frequencySecondFile;
@@ -32,5 +32,16 @@ public class Word {
     @Override
     public String toString() {
         return word + " " + totalFrequency + " = " + frequencyFirstFile + " + " + frequencySecondFile;
+    }
+
+    @Override
+    public int compareTo(Word anotherWord) {
+        if (this.totalFrequency > anotherWord.totalFrequency) {
+            return -1;
+        } else if (this.totalFrequency < anotherWord.totalFrequency) {
+            return 1;
+        }
+
+        return 0;
     }
 }

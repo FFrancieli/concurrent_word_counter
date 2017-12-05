@@ -4,6 +4,7 @@ import cache.Cache;
 import word.Word;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +36,13 @@ public class WordCounterService {
         Future<List<Word>> wordFrequency = executorService.submit(wordCountTask);
         executorService.shutdown();
 
-        return wordFrequency.get();
+        return sortList(wordFrequency.get());
+    }
+
+    private List<Word> sortList(List<Word> words) {
+        Collections.sort(words, Comparator.naturalOrder());
+
+        return words;
     }
 
      void setWordCountTask(WordCountTask wordCountTask) {

@@ -31,7 +31,7 @@ public class FileReaderTask implements Runnable {
     private Runnable readFile() {
         return () -> {
             try {
-                List<String> words = fileReader.read(file);
+                List<String> words = fileReader.extractWordsFrom(file);
                 cache.cache(file.getName(), words);
             } catch (IOException e) {
                 e.printStackTrace();

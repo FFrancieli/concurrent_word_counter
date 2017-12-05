@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class FileReader {
 
-    public  List<String> read(File file) throws IOException {
+    public  List<String> extractWordsFrom(File file) throws IOException {
         Path path = Paths.get(file.getAbsolutePath());
 
         List<String> lines = Files.readAllLines(path);

@@ -28,7 +28,7 @@ public class FileReaderTest {
     public void returnsArrayOfWordsOnSingleLineFile() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("one single line file content"));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words.size(), is(5));
         assertThat(words, hasItems("one", "single", "line", "file", "content"));
@@ -39,7 +39,7 @@ public class FileReaderTest {
         List<String> fileContent = Arrays.asList("first line", "second line", "third line");
         File multipleLinesFile = createInMemoryTemporaryFile(fileContent);
 
-        List<String> words = fileReader.read(multipleLinesFile);
+        List<String> words = fileReader.extractWordsFrom(multipleLinesFile);
 
         assertThat(words.size(), is(6));
         assertThat(words, hasItems("first", "line", "second", "third"));
@@ -49,7 +49,7 @@ public class FileReaderTest {
     public void returnsListOfWordsInLowerCase() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("one SINGLE Line file conTent"));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words.size(), is(5));
         assertThat(words, hasItems("one", "single", "line", "file", "content"));
@@ -59,7 +59,7 @@ public class FileReaderTest {
     public void ignoresPunctuation() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hello, World.:!?-/\\"));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words, hasItems("hello", "world"));
         assertThat(words.size(), is(2));
@@ -69,7 +69,7 @@ public class FileReaderTest {
     public void blankSpacesAreNotWords() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hello             ,              World!"));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words, hasItems("hello", "world"));
         assertThat(words.size(), is(2));
@@ -79,7 +79,7 @@ public class FileReaderTest {
     public void apostrophesArePartOfTheWord() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("I don't."));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words.size(), is(2));
         assertThat(words, hasItems("i", "don't"));
@@ -89,7 +89,7 @@ public class FileReaderTest {
     public void specialCharactersAreNotWords() throws Exception {
         File singleLineFile = createInMemoryTemporaryFile(Arrays.asList("Hey #$%&)(&*^+-=`~[@]%"));
 
-        List<String> words = fileReader.read(singleLineFile);
+        List<String> words = fileReader.extractWordsFrom(singleLineFile);
 
         assertThat(words.size(), is(1));
         assertThat(words, hasItem("hey"));
